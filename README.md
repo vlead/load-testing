@@ -21,7 +21,8 @@ the portal or a specific lab.
 Methodology
 -----------
 
-* We use the cannonical load testing tool from Apache called (ab)[]. This tool
+* We use the cannonical load testing tool from Apache called
+  (ab)[https://httpd.apache.org/docs/2.2/programs/ab.html]. This tool
   can generate multiple concurrent requests, and measure connect, waiting and
 response times for each request, and can give aggregated or granular report of
 its measurements.
