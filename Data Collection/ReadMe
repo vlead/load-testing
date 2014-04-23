@@ -1,0 +1,10 @@
+Assumption to run this scripts:
+Firstly all the command line arguments should be passed with out any ambiguity.
+Script loadTesting.sh takes two command line arguments 'arg1' and 'arg2' as shown in below.
+
+$loadTesting.sh arg1 arg2
+
+Here first argument "arg1" is the file containing all urls for which for we need to run 'ab' tool. Each line of 'arg1' contains a url. For example look at the 'urls' file which contains url in each line of the file.
+
+And Second argument "arg2" is the file containing values for parameter 'n' and 'c' where
+'n' is the no of requests and 'c' is the level of concurrecy. Each line of such an file indicates values for 'n' and 'c'. For example look at the first line of 'config' file contains "100 20" where '100' is the no of requests and '20' is the concurrency level.
