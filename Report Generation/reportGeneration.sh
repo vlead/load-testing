@@ -1,23 +1,26 @@
 #function to extract required fields reports previously generated
 extractCsv() {
-while read p; do
-  csv="_csv.csv"
+while read url; do #loop to read url from 'url' file
+  csv="_csv.csv"   #storing file extension in variable 'csv'
+  #storing headers of csv files in 'res'
   res="No of Requests,Concurreny Level,Time taken for tests,Requests per second,Complete requests,Failed requests,Time per request(mean across all concurrent requests),Transfer rate"$'\n'       
-  q=$(echo $p | sed 's/[:/.-]/_/g') 
-  while read n c; do
-    res="$res$n,$c"                     
-    while read field; do               
-      cd $q
+  dir=$(echo $url | sed 's/[:/.-]/_/g') #extracting filename 'dir' from 'url'
+  while read n c; do #loop for reading 'n' and 'c' from 'config' file
+    res="$res$n,$c"  #adding parameters values to 'res'                   
+    while read field; do #loop for reading 'field' from 'fields' files         
+      cd $dir #changing directory to 'dir'
       #echo "ab -n $n -c $c $p $field :"
-      res="$res,$(cat $q$n$c | grep "$field" | grep -o '[[:digit:]*\.[:digit:]]*')"
+      #concatenating value for 'field'
+      res="$res,$(cat $dir$n$c | grep "$field" | grep -o '[[:digit:]*\.[:digit:]]*')"
       #res="$res,$tem"
-      cd ..
-    done < $3 
-    res="$res"$'\n'
-  done < $2 
-  echo "$res" > "$q$csv"
+      cd .. #changing to parent directory
+    done < $3 #exiting loop which reads 'fields' file as third parameter
+    res="$res"$'\n' #concatenating new line character after each tuple of csv file
+  done < $2 #exiting loop which reads 'config' file as second parameter
+  echo "$res" > "$dir$csv" #redirecting content in 'res' to a csv file named '$dir$csv'
 done < $1
-echo "Reports are generated successfully in CSV format"         
+echo "Reports are generated successfully in CSV format"  #echoing script completion       
 }
 
+#invoking extracCsv() funtion
 extractCsv $1 $2 $3
